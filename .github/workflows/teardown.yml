@@ -1,0 +1,25 @@
+name: teardown
+
+on: 
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Show env
+        run: |
+          cat /etc/os-release
+          echo $AWS_DEFAULT_REGION
+          echo ${{github.ref_name}}
+
+      - name: Terraform init
+        run: |
+          make init
+
+      - name: Terraform destroy
+        run: |
+          make destroy
